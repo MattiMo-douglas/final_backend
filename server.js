@@ -2,8 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
-const userRoutes = require('./routes/user');
-const productRoutes = require('./routes/product');
+const bookRoutes = require('./routes/books');
 
 // Load environment variables from .env file
 dotenv.config();
@@ -16,7 +15,7 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-const PORT = process.env.PORT || 4500;
+const PORT = process.env.PORT || 5000;
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -38,8 +37,7 @@ const connectDB = async () => {
 connectDB();
 
 // Set up routes
-app.use('/api', userRoutes);
-app.use('/api' , productRoutes);
+app.use('/api' , bookRoutes);
 
 // Basic route
 app.get('/', (req, res) => {
