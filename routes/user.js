@@ -19,13 +19,19 @@ router.post('/newuser', async (req, res) => {
         }
 
         const newUser = new User({ email, username });
-
         const savedUser = await newUser.save();
+
         res.status(201).json(savedUser);
     } catch (err) {
+        if (err.code === 11000) {
+            return res.status(409).json({
+                message: 'Duplicate key error'
+            });
+        }
         res.status(400).json({ message: err.message });
     }
 });
+
 // Get all users
 router.get('/getusers', async (req, res) => {
     try {
@@ -79,7 +85,6 @@ router.put('/user/:id', async (req, res) => {
         if (err.kind === 'ObjectId') {
             return res.status(400).json({ message: 'Invalid user ID' });
         }
-        // Handle other errors
         res.status(500).json({ message: err.message });
     }
 });
