@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const userRoutes = require('./routes/user');
 const productRoutes = require('./routes/product');
 
@@ -8,6 +9,13 @@ const productRoutes = require('./routes/product');
 dotenv.config();
 
 const app = express();
+
+app.use(cors({
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
+
 const PORT = process.env.PORT || 4500;
 
 // Middleware to parse JSON
